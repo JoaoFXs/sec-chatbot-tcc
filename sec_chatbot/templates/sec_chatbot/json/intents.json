@@ -1,0 +1,76 @@
+{
+  "intents": [
+  {
+    "tag": "welcome",
+    "patterns": ["Oi", "Olá", "Bom dia", "Boa tarde", "Boa noite", "Hello", "Hi", "Hey", "Como vai?", "Tudo bem?", "Saudações", "E aí", "Como posso ajudar?", "Olá, assistente", "Oi, assistente", "Bom dia, assistente", "Boa tarde, assistente", "Boa noite, assistente"],
+    "responses": ["Olá! Eu sou sua assistente virtual. Como posso ajudar você hoje?", "Oi! Estou aqui para ajudar. O que você precisa?", "Olá! Em que posso te ajudar hoje?", "Olá! Sou a assistente virtual. O que você gostaria de fazer?", "Oi! Estou à disposição para ajudar com qualquer coisa que você precisar.", "Saudações! Estou aqui para responder suas perguntas. Como posso ajudar?", "E aí! O que você precisa de ajuda hoje?", "Como vai? Posso te ajudar com alguma coisa?", "Tudo bem? O que posso fazer por você?", "Olá, assistente virtual aqui. Como posso ser útil?"],
+    "context": ["starting"]
+  },
+  {
+    "tag": "who_are_you",
+    "patterns": ["Qual é o seu nome?", "Quem é você?", "Como você se chama?", "Nome?", "Qual o seu nome?", "Como te chamas?", "Quem você é?", "Você tem nome?", "Qual é a sua identidade?", "Quem é a assistente?"],
+    "responses": ["Eu sou uma assistente virtual, ainda não tenho um nome.", "Sou uma assistente virtual. Não tenho um nome definido ainda.", "Ainda não tenho um nome, sou apenas uma assistente virtual.", "Meu nome é Assistente Virtual. Estou aqui para ajudar!", "Eu sou uma assistente virtual sem nome, mas estou aqui para ajudar."],
+    "context": ["starting"]
+  },
+  {
+    "tag": "censored",
+    "patterns": ["Feia", "Boba", "Chata", "Vai pro inferno", "Puta", "Sua gostosa", "Você é horrível", "Você é uma chata", "Não gosto de você", "Você é desagradável", "Vai embora", "Não quero mais falar com você", "Você não me ajuda", "Você é insuportável"],
+    "responses": ["Não toleramos nenhum tipo de assédio.", "Por favor, mantenha o respeito. Não toleramos comportamento inadequado.", "Este tipo de comentário não é aceitável aqui. Vamos manter o respeito.", "Estamos aqui para ajudar de forma respeitosa. Comentários ofensivos não são permitidos.", "Não aceitamos assédio. Por favor, seja respeitoso."],
+    "context": ["basic"]
+  },
+  {
+    "tag": "thanks",
+    "patterns": ["Obrigada", "Tks", "Thank you", "Valeu", "Obrigada pela ajuda", "Muito obrigada", "Obrigado", "Grato", "Agradeço", "Valeu mesmo", "Obrigado pela ajuda", "Agradecido", "Muito grato", "Obrigado pelo suporte", "Obrigado por tudo", "Obrigado pela assistência"],
+    "responses": ["De nada ;)", "Agradeço seu contato, volte sempre!", "Por nada! Se precisar, estamos aqui.", "Fico feliz em ajudar! Volte sempre que precisar.", "É um prazer ajudar! Até mais.", "Não há de quê! Estamos à disposição.", "Sempre que precisar, estou aqui para ajudar!", "Fico à disposição para o que precisar."],
+    "context": ["basic"]
+  },
+  {
+    "tag": "ra",
+    "patterns": ["ra", "qual meu ra?"],
+    "responses": ["seu ra e: {{ aluno.ra }}", "Seu numero de matricula ra é: {{ aluno.ra }}"],
+    "context": ["basic"]
+  },
+  {
+    "tag": "informacoes_professor",
+    "patterns": ["Professores", "Quero informacoes sobre professores", "Me fale sobre os professores", "Informacoes dos professores", "Dados dos professores", "Quero saber sobre professores", "Qual professor você quer saber?", "Preciso de informações sobre professores", "Me diga sobre os professores", "Sobre professores"],
+    "responses": ["Por favor, digite o nome do professor da seguinte forma: ", "Digite o nome do professor que você deseja informações.", "Informe o nome do professor para obter os detalhes.", "Para informações sobre um professor, digite o nome dele.", "Por favor, forneça o nome do professor para que eu possa buscar as informações.", "Digite o nome do professor que você quer saber mais detalhes.", "Informe o nome do professor e eu lhe darei as informações necessárias.", "Qual é o nome do professor que você gostaria de saber mais?"],
+    "context": ["professores"]
+  },
+  {
+    "tag": "horario_aula",
+    "patterns": ["Qual o horário da aula?", "Quero saber o horário de uma aula", "Quando é a aula de [matéria]?", "Horário de aula", "Quando é a aula de [matéria] na turma [turma]?", "Qual o horário da aula de [matéria]?"],
+    "responses": ["Por favor, informe a matéria e a turma para que eu possa buscar o horário da aula."],
+    "context": ["horario_aula"]
+  },
+  {
+    "tag": "nota_aluno",
+    "patterns": ["Quero saber minha nota em uma materia?", "Quero saber minha nota em determinada materia", "Quanto eu tirei em [matéria]?", "notas da materia", "Qual minha média em [matéria]?", "Qual o horário da aula de [matéria]?", "quanto eu tirei na prova de [matéria]", "quanto eu tirei no trabalho de [matéria]", "quanto eu tirei no trabalho de [matéria]", "quero saber meu boletim", "quero saber as notas no meu boletim", "boletim"],
+    "responses": ["Por favor, informe a matéria que você quer saber suas notas"],
+    "context": ["nota_aluno"]
+  },
+  {
+    "tag": "consulta_calendario",
+    "patterns": ["calendário", "calendário acadêmico", "calendário da faculdade", "calendário acadêmico", "quero o calendario", "calendario", "calendario da faculdade", "calendario acadêmico", "quero o calendario", "calendário acadêmico"],
+    "responses": ["Aqui está o calendário acadêmico: [Calendário Acadêmico](URL_DO_CALENDARIO_NO_DJANGO)."],
+    "context": [""]
+  },
+  {
+    "tag": "consulta_estagio",
+    "patterns": ["estagio", "informações estagio", "quero informações sobre estagio","informações sobre estágio obrigatório", "como funciona o estágio obrigatório", "quantas horas de estágio obrigatório preciso", "como faço para comprovar o estágio", "detalhes do estágio obrigatório", "horas do estágio obrigatório", "preciso de informações sobre estágio", "quero saber sobre o estágio obrigatório", "o que é necessário para o estágio obrigatório", "como declarar o estágio obrigatório"],
+    "responses": ["Ola, segue informações de estagio"],
+    "context": ["consulta_estagio"]
+  },
+  {
+    "tag": "consulta_quantidade_horas_complementares",
+    "patterns": ["quantas horas complementares eu tenho?", "qual o meu total de horas complementares?", "quanto de horas complementares eu já fiz?", "preciso saber quantas horas complementares tenho", "quantas horas de atividades complementares já realizei?", "informações sobre horas complementares", "quantas horas complementares faltam para mim?", "qual é o meu saldo de horas complementares?", "quero saber o total de horas complementares", "horas complementares acumuladas", "qual a quantidade de horas complementares que eu já fiz?", "como ver minhas horas complementares?"],
+    "responses": ["Horas complementares"],
+    "context": ["consulta_quantidade_horas_complementares"]
+  },
+  {
+    "tag": "anything_else",
+    "patterns": [""],
+    "responses": ["Desculpa, nao entendi o que voce falou, tente novamente!"],
+    "context": ["basic"]
+  }
+  ]
+  }

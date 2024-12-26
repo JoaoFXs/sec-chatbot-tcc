@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            
+        }
+
+        .chat-container {
+            width: 100%;
+            height: 400px;
+            max-width: 1200px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+           
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            background-color: rgba(42, 85, 149, 1);
+            color: #ffffff;
+            position: relative;
+        }
+
+        .chat-header .avatar-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chat-header .avatar {
+            margin-left: 16px;
+            border-radius: 50%;
+            background-color: #ffffff;
+            color: #007BFF;
+            font-size: 24px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .chat-header  .pencil-icon {
+            position: absolute;
+            bottom: 0;
+            right: 41px;
+            font-size: 15px;
+            transform: translateY(50%);
+            background-color: #007BFF;
+            color: #ffffff;
+            border-radius: 50%;
+            padding: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .chat-header .dropdown-icon {
+            margin-left: 8px;
+            font-size: 18px;
+        }
+
+        .chat-header .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background-color: #ffffff;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .chat-header .avatar-dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .chat-header .dropdown-content p {
+            margin: 8px 0;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        .chat-header .header-info img {
+           width: 80%;
+        }
+
+        .customization-menu {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            border: 1px solid #dddddd;
+            padding: 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            width: 300px;
+            max-width: 90%;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .customization-menu label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #007BFF;
+            background-color: #FFFF;
+            align-items: center;
+            
+        }
+
+        .customization-menu .customization-item {
+            margin-bottom: 15px;
+            align-items: center; 
+          
+        }
+        
+        .customization-menu button {
+            padding: 10px 16px;
+            margin-left: 8px;
+            background-color: rgba(42, 85, 149, 1);
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;   
+            align-items: center;
+            display: block; /* Garante que o botão seja um bloco para centralização */
+            margin: 0 auto; /* Centraliza o botão horizontalmente */
+        }
+
+        .chat-body {
+            padding: 16px;
+            max-height: 400px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        .chat-message {
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f1f1f1;
+            max-width: 80%;
+        }
+
+        .chat-message.user {
+            background-color: rgba(42, 85, 149, 1);          
+            align-self: flex-end;
+            margin-left: auto;
+            color: white;
+            margin-right: 0;
+        }
+
+        .chat-message.bot {
+            background-color: #eeeeee;
+            align-self: flex-start;
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 16px;
+            background-color: #ffffff;
+            border-top: 1px solid #f1f1f1;
+        }
+
+        .chat-footer input[type="text"] {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+        }
+
+        .chat-footer button {
+            padding: 10px 16px;
+            margin-left: 8px;
+            background-color: rgba(42, 85, 149, 1);
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .chat-container {
+                max-width: 90%;
+            }
+
+            .chat-header .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 20px;
+            }
+
+            .chat-header .header-info h1 {
+                font-size: 18px;
+            }
+
+            .chat-header .header-info p {
+                font-size: 12px;
+            }
+
+            .pencil-icon {
+                bottom: -15px;
+                right: 15px;
+                padding: 6px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .chat-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .chat-header .avatar-dropdown {
+                margin-top: 10px;
+            }
+
+            .chat-header .dropdown-icon {
+                display: none;
+            }
+
+            .customization-menu {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .chat-footer {
+                flex-direction: column;
+            }
+
+            .chat-footer button {
+                width: 100%;
+                margin-top: 8px;
+                margin-left: 0;
+            }
+            
+        }
+        .logout-button {
+            position: relative;
+          
+            padding: 10px 16px;
+            background-color: #e74c3c; /* Cor vermelha */
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+
+        }
+        
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+        
+    </style>
+</head>
+<body>
+        
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-info">
+                <img src="https://files.engaged.com.br/5c192cdf667332429960563e/account/5c192cdf667332429960563e/rZRopHkjRdKrUwB0Ajri_logo-alta-impacta_optimized.png" alt="Logo Impacta">
+            </div>
+            <div class="avatar-dropdown">
+
+               
+                <div class="avatar">
+                    <i class="fas fa-user"></i>                
+                </div>
+
+             
+                <i class="fas fa-caret-down dropdown-icon"></i>
+
+              
+                <div class="dropdown-content">
+                    <p>{{ aluno.nome }}</p>
+                    <p>RA: {{ aluno.ra }}</p>
+                    <p>Curso: {{ aluno.curso }}</p>
+                    <p>Turma: {{ aluno.turma }}</p>
+                    <p>Semestre Atual: {{ aluno.semestre }}</p>
+                    <p>Situação da Matrícula: {{ aluno.situacao_matricula }}</p>
+                        <!-- Botão de logout -->
+       <form action="{% url 'logout' %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="logout-button">Logout</button>
+    </form>
+                </div>
+
+              
+               
+            </div>
+
+            <div class="pencil-icon">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+          
+            <div class="customization-menu" id="customizationMenu">
+                <div class="customization-item">
+                    <label for="colorPicker">Seleção de paleta de cores:</label>
+                    <input type="color" id="colorPicker"/>
+                </div>
+                <div class="customization-item">
+                    <label for="fontPicker">Seleção de fontes:</label>
+                    <select id="fontPicker">
+                        <option value="Arial">Arial</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Trebuchet MS">Trebuchet MS</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                        <option value="Impact">Impact</option>
+                        <option value="Lucida Console">Lucida Console</option>
+                        <option value="Lucida Sans Unicode">Lucida Sans Unicode</option>
+                        <option value="Palatino Linotype">Palatino Linotype</option>
+                        <option value="Segoe UI">Segoe UI</option>
+                        <option value="Calibri">Calibri</option>
+                        <option value="Cambria">Cambria</option>
+                        <option value="Consolas">Consolas</option>
+                        <option value="Garamond">Garamond</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Helvetica Neue">Helvetica Neue</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Arial Black">Arial Black</option>
+                        <option value="Comic Sans MS">Comic Sans MS</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Times">Times</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Trebuchet">Trebuchet</option>
+                        <option value="Lucida Sans">Lucida Sans</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Times">Times</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Trebuchet">Trebuchet</option>
+                        <option value="Lucida">Lucida</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Times">Times</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Trebuchet">Trebuchet</option>
+                        <option value="Lucida">Lucida</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Times">Times</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Trebuchet">Trebuchet</option>
+                        <option value="Lucida">Lucida</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Courier">Courier</option>
+                        <option value="Times">Times</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Tahoma">Tahoma</option>
+                        <option value="Trebuchet">Trebuchet</option>
+                        <option value="Lucida">Lucida</option>
+            
+                    </select>
+                </div>
+                <div class="customization-item">
+                    <label for="fontSizeSlider">Aumentar/diminuir tamanho da fonte:</label>
+                    <input type="range" id="fontSizeSlider" min="10" max="30" />
+                </div>
+                <div class="customization-item">
+                    <label for="darkModeToggle">Modo claro/escuro:</label>
+                    <input type="checkbox" id="darkModeToggle" />
+                </div>
+                <button id="applyCustomizations">Aplicar</button>
+
+                
+            </div>
+        </div>
+        <div class="chat-body" id="chat-body">
+           
+
+            <div class="chat-message bot">
+                Olá! Como posso ajudar você hoje?
+            </div>
+        </div>
+
+  
+        <div class="chat-footer">
+            <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+            <input type="text" id="messageInput" placeholder="Digite sua mensagem...">
+            <button id="sendButton">Enviar</button>
+        </div>
+      
+    </div>
+   
+    
+    <script>
+
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM fully loaded and parsed');
+
+            const sendButton = document.getElementById('sendButton');
+            const messageInput = document.getElementById('messageInput');
+            const chatBody = document.getElementById('chat-body');
+            const pencilIcon = document.querySelector('.pencil-icon');
+            const customizationMenu = document.getElementById('customizationMenu');
+            const applyCustomizations = document.getElementById('applyCustomizations');
+
+            if (!messageInput || !sendButton) {
+                console.error('Elements not found.');
+                return;
+            }
+
+            sendButton.addEventListener('click', () => {
+                const message = messageInput.value.trim();
+                if (message) {
+                    // Adicione a mensagem do usuário ao chat
+                    const userMessage = document.createElement('div');
+                    userMessage.classList.add('chat-message', 'user');
+                    userMessage.textContent = message;
+                    chatBody.appendChild(userMessage);
+
+                    // Limpe o input
+                    messageInput.value = '';
+
+                    // Envie a mensagem para o servidor
+                    fetch('{% url "chat" %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json;charset=UTF-8',
+                            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                        },
+                        body: JSON.stringify({ 'message': message })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        const botResponse = data.response.replace(/\n/g, '<br>') || 'Desculpe, não entendi o que você disse.';
+                        const botMessage = document.createElement('div');
+                        botMessage.classList.add('chat-message', 'bot');
+                        botMessage.innerHTML = botResponse;
+                        chatBody.appendChild(botMessage);
+                        chatBody.scrollTop = chatBody.scrollHeight; // Rola para a parte inferior do chat
+                    })
+                    .catch(error => {
+                        console.error('Erro na requisição:', error);
+                    });
+                }
+            });
+
+
+            
+            sendButton.addEventListener('click', () => {
+                const userMessage = messageInput.value;
+                if (userMessage.trim()) {
+                    const userChatBubble = document.createElement('div');
+                    userChatBubble.className = 'chat-message user';
+                    userChatBubble.textContent = userMessage;
+
+                    chatBody.appendChild(userChatBubble);
+                    messageInput.value = '';
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }
+            });
+
+            messageInput.addEventListener('keypress', (event) => {
+                if (event.key === 'Enter') {
+                    sendButton.click();
+                }
+            });
+
+            pencilIcon.addEventListener('click', () => {
+                customizationMenu.style.display = customizationMenu.style.display === 'block' ? 'none' : 'block';
+            });
+
+            applyCustomizations.addEventListener('click', () => {
+                
+                const colorPicker = document.getElementById('colorPicker').value;
+                const fontPicker = document.getElementById('fontPicker').value;
+                const fontSize = document.getElementById('fontSizeSlider').value;
+                const darkModeToggle = document.getElementById('darkModeToggle').checked;
+
+        
+                document.body.style.color = colorPicker;
+                document.body.style.fontFamily = fontPicker;
+                document.body.style.fontSize = fontSize + 'px';
+                //document.body.style.color = darkModeToggle ? '#ffffff' : '#000000';
+                document.body.style.backgroundColor = darkModeToggle ? '#333333' : '#ffffff';
+
+                customizationMenu.style.display = 'none';
+            });
+
+           
+
+        });
+    </script>
+
+</body>
+</html>
